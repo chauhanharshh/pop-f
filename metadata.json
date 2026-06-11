@@ -1,0 +1,6 @@
+{
+  "name": "PopFlix",
+  "description": "A Netflix-style premium cinema streaming catalog featuring trending movies, a custom hero carousel, real-time searchable listings, user authentication, and movie details.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

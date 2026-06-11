@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+/* Main Theater Shell */
+.splash-cinema-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #050505; /* Deep cinematic black */
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+  box-sizing: border-box;
+}
+
+/* Exit Zoom Out & Fade (4.2s - 5.0s) */
+.splash-cinema-container.exit-stage {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+/* Starfield Overlay - Cinematic box-shadow trick to populate gold stardust (0s - 1s fade-in) */
+.starfield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  background-image: 
+    radial-gradient(rgba(232, 200, 64, 0.5) 2px, transparent 40px),
+    radial-gradient(rgba(232, 200, 64, 0.3) 1px, transparent 30px),
+    radial-gradient(rgba(232, 200, 64, 0.2) 2px, transparent 40px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+  animation: starFadeIn 1.5s ease-in-out forwards;
+}
+
+/* Ambient gold cinema light bleed */
+.ambient-spotlight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(232, 200, 64, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  animation: glowSlowPulse 3s infinite alternate;
+}
+
+/* Center Stage Content container */
+.splash-theater-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* -------------------------------------------
+   FILM STRIP (1.0s - 2.5s entry)
+-------------------------------------------- */
+.film-strip-layer {
+  position: absolute;
+  width: 100%;
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transform: translateX(-120%);
+  animation: slideInFilmStrip 1.5s ease-in-out forwards;
+  animation-delay: 1.0s; /* Slower, smoother entry from 1s to 2.5s */
+}
+
+/* Half strips split when torn */
+.film-strip-half {
+  width: 50vw;
+  height: 140px;
+  background-color: #1a1a1a;
+  background-image: linear-gradient(rgba(26,26,26,0.98), rgba(20,20,20,0.98));
+  border-top: 2px solid rgba(232, 200, 64, 0.4); /* Gold Border Accent */
+  border-bottom: 2px solid rgba(232, 200, 64, 0.4); /* Gold Border Accent */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: all 1s ease-in-out;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.left-half {
+  border-right: 1px dashed rgba(255, 255, 255, 0.2);
+  transform-origin: left center;
+}
+
+.right-half {
+  border-left: 1px dashed rgba(255, 255, 255, 0.2);
+  transform-origin: right center;
+}
+
+/* Tear/Split Action at 2.5s onwards */
+.film-strip-layer.split-active .left-half {
+  transform: translateX(-110vw) rotate(-8deg) scale(0.9);
+  opacity: 0;
+}
+
+.film-strip-layer.split-active .right-half {
+  transform: translateX(110vw) rotate(8deg) scale(0.9);
+  opacity: 0;
+}
+
+/* Sprocket Holes (The movie-reel details) */
+.sprocket-holes {
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sprocket-holes span {
+  width: 18px;
+  height: 10px;
+  background-color: #050505;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Color frames inside celluloid */
+.film-frames {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
+  padding: 0 30px;
+}
+
+.frame {
+  width: 100px;
+  height: 76px;
+  border-radius: 2px;
+  opacity: 0.85;
+}
+
+/* Multi-colored projection frames - Gold accent on Frame 1 */
+.frame-1 { background: linear-gradient(135deg, rgba(232, 200, 64, 0.4) 0%, rgba(232, 200, 64, 0) 100%); border: 1px solid rgba(232, 200, 64, 0.3); }
+.frame-2 { background: linear-gradient(135deg, rgba(235, 168, 50, 0.4) 0%, rgba(235, 168, 50, 0) 100%); border: 1px solid rgba(235, 168, 50, 0.3); }
+.frame-3 { background: linear-gradient(135deg, rgba(16, 185, 129, 0.4) 0%, rgba(16, 185, 129, 0) 100%); border: 1px solid rgba(16, 185, 129, 0.3); }
+.frame-4 { background: linear-gradient(135deg, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0) 100%); border: 1px solid rgba(59, 130, 246, 0.4); }
+
+
+/* -------------------------------------------
+   LOGO REVEAL MODULE (Behind film strip)
+-------------------------------------------- */
+.splash-cinema-logo-reveal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+  opacity: 0;
+  transform: scale(0.65);
+  filter: blur(4px);
+  transition: all 1s ease-in-out;
+}
+
+/* Bursts out when torn */
+.splash-cinema-logo-reveal.burst-revealed {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0px);
+}
+
+.splash-cinema-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 11vw, 82px);
+  letter-spacing: 6px;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  line-height: 1;
+  position: relative;
+  overflow: hidden;
+  padding: 8px 24px;
+}
+
+/* Distinctive PopFlix theme */
+.pop-text {
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(255,255,255,0.4);
+}
+
+.flix-text {
+  color: #e8c840; /* Golden Flix */
+  text-shadow: 0 0 16px rgba(232, 200, 64, 0.6);
+}
+
+/* Golden glint sweep reflection */
+.logo-shimmer {
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(232, 200, 64, 0.35) 45%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(232, 200, 64, 0.35) 55%,
+    transparent 70%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+
+/* Shimmer animation sweeps once logo is revealed (2.5s) */
+.burst-revealed .logo-shimmer {
+  animation: shineGlint 1s ease-in-out forwards;
+  animation-delay: 0.1s; /* Sweeps between 2.6s - 3.6s */
+}
+
+
+/* -------------------------------------------
+   CINEMATIC TAGLINE (3.5s onwards)
+-------------------------------------------- */
+.splash-cinema-tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #aaaaaa;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 20px 0 0 0;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.7s ease-in-out;
+}
+
+/* Fade in slightly after logo is settled */
+.burst-revealed .splash-cinema-tagline {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1s; /* Starts at 3.5s, ends at 4.2s */
+}
+
+
+/* -------------------------------------------
+   ANIMATIONS LIST
+-------------------------------------------- */
+@keyframes starFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 0.4; }
+}
+
+@keyframes glowSlowPulse {
+  0% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+@keyframes slideInFilmStrip {
+  0% {
+    transform: translateX(-120%);
+  }
+  75% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes shineGlint {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
