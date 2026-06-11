@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Connect to the Python Flask backend running on port 5000
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://pop-b.onrender.com/api",
 });
 
 API.interceptors.request.use((config) => {
